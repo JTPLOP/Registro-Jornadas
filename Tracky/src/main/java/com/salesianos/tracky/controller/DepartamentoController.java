@@ -49,6 +49,8 @@ public class DepartamentoController {
     public ResponseEntity<Void> deleteDepartment (
             @PathVariable Long id
     ) {
+
+        departamentoService.deleteDepartment(id);
         return ResponseEntity.noContent().build();
     }
 

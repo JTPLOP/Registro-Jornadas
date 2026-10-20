@@ -45,7 +45,7 @@ public class DepartamentoService {
     }
 
     public void deleteDepartment (Long id) {
-        if (departamentoRepository.existsById(id))
+        if (!departamentoRepository.existsById(id))
             throw new RuntimeException();
 
         departamentoRepository.deleteById(id);
