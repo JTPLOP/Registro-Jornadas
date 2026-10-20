@@ -1,10 +1,7 @@
 package com.salesianos.tracky.model;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
@@ -25,5 +22,25 @@ public class Empleado {
 
     private double salario;
 
+
+    @ManyToOne (fetch = FetchType.EAGER)
+    @JoinColumn (name = "id_departament",
+        foreignKey = @ForeignKey (name = "fk_employer_department"))
+    private Departamento departamento;
+
+    // METODOS ASOCIACION BIDIRECCIONAL
+
+    public void addToDepartamento (Departamento departamento) {
+
+        this.departamento = departamento;
+        departamento.getListaEmpleados().add(this);
+    }
+
+    public void removeToDepartamento (Departamento departamento) {
+
+        departamento.getListaEmpleados().remove(this);
+        this.departamento = null;
+    }
+    
 
 }
