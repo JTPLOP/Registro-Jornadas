@@ -5,9 +5,7 @@ import com.salesianos.tracky.model.Departamento;
 import com.salesianos.tracky.service.DepartamentoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,18 +17,40 @@ public class DepartamentoController {
     private final DepartamentoService departamentoService;
 
     @GetMapping
-    public List<Departamento> getAllDepartamentos () {
+    public ResponseEntity<List<Departamento>> getAllDepartamentos () {
 
-        return
+        List<Departamento> resultBusqueda = departamentoService.findAll();
 
+        return ResponseEntity.ok(resultBusqueda);
 
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Departamento> getDepartamentById(
+            @PathVariable Long id
+    ) {
+
+        Departamento resultBusqueda = departamentoService.findById(id);
 
 
+        return ResponseEntity.ok(resultBusqueda);
 
+    }
 
+    @PostMapping
+    public ResponseEntity<Departamento> addDepartment(
+            @RequestBody Departamento departamento) {
 
+        return ResponseEntity.status(201)
+                .body(departamentoService.addDepartment(departamento));
+    }
+
+    @DeleteMapping ("/{id}")
+    public ResponseEntity<Void> deleteDepartment (
+            @PathVariable Long id
+    ) {
+        return ResponseEntity.noContent().build();
+    }
 
 
 

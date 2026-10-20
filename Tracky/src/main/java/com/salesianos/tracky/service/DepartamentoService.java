@@ -29,16 +29,32 @@ public class DepartamentoService {
 
     }
 
-    public Optional<Departamento> findById(Long id) {
+    public Departamento findById(Long id) {
 
-        Optional <Departamento> resultBusqueda = findById(id);
-
-        if (resultBusqueda.isEmpty())
-            throw new RuntimeException();
-
-        return resultBusqueda;
+        return departamentoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException());
 
     }
+
+    public Departamento addDepartment (Departamento departamento) {
+
+        departamentoRepository.save(departamento);
+
+        return departamento;
+
+    }
+
+    public void deleteDepartment (Long id) {
+        if (departamentoRepository.existsById(id))
+            throw new RuntimeException();
+
+        departamentoRepository.deleteById(id);
+
+
+    }
+
+
+
 
 
 
