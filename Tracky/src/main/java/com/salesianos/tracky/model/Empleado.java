@@ -4,6 +4,9 @@ package com.salesianos.tracky.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -23,12 +26,14 @@ public class Empleado {
     private double salario;
 
 
+    // ASOCIACION N:1 CON DEPARTAMENTOS
+
     @ManyToOne (fetch = FetchType.EAGER)
     @JoinColumn (name = "id_departament",
         foreignKey = @ForeignKey (name = "fk_employer_department"))
     private Departamento departamento;
 
-    // METODOS ASOCIACION BIDIRECCIONAL
+
 
     public void addToDepartamento (Departamento departamento) {
 
@@ -41,6 +46,11 @@ public class Empleado {
         departamento.getListaEmpleados().remove(this);
         this.departamento = null;
     }
-    
+
+    // ASOCIACION 1:N CON FICHAJES
+
+    @OneToMany (mappedBy = "empleado", fetch = FetchType.EAGER)
+    @Builder.Default
+    private List<Fichaje> historialFichajes = new ArrayList<>();
 
 }
