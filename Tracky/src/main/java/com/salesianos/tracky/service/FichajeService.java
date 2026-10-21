@@ -20,7 +20,7 @@ public class FichajeService {
     private final FichajeRepository fichajeRepository;
     private final EmpleadoRepository empleadoRepository;
 
-    public Fichaje addFichaje (UpdateFichajeRequest fichajeDTO) {
+    public GetFichajeResponse addFichaje (UpdateFichajeRequest fichajeDTO) {
 
         Empleado empleado = empleadoRepository.findById(fichajeDTO.idEmpleado())
                 .orElseThrow(() -> new RuntimeException());
@@ -30,7 +30,9 @@ public class FichajeService {
         fichaje.setEmpleado(empleado);
         fichaje.setFechaAccion(LocalDateTime.now());
 
-        return fichajeRepository.save(fichaje);
+        fichajeRepository.save(fichaje);
+
+        return GetFichajeResponse.of(fichaje);
 
     }
 

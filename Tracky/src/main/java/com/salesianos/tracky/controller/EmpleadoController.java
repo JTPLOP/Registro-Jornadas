@@ -60,7 +60,7 @@ public class EmpleadoController {
     }
 
     @PostMapping ("tracker/{id}")
-    public ResponseEntity <Fichaje> addTrackEmployer (
+    public ResponseEntity <GetFichajeResponse> addTrackEmployer (
             @RequestBody UpdateFichajeRequest fichajeDTO
             ) {
 
