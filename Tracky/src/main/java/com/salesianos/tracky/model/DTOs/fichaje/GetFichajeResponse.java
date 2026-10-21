@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 public record GetFichajeResponse(
         LocalDateTime fechaAccion,
-        Enum<TipoFichaje> tipoFichaje,
+        TipoFichaje tipoFichaje,
         String nombreEmpleado
 
 ) {

@@ -3,9 +3,11 @@ package com.salesianos.tracky.controller;
 
 import com.salesianos.tracky.model.DTOs.empleado.GetEmpleadoResponse;
 import com.salesianos.tracky.model.DTOs.empleado.UpdateEmpleadoRequest;
+import com.salesianos.tracky.model.DTOs.fichaje.GetFichajeResponse;
 import com.salesianos.tracky.model.DTOs.fichaje.UpdateFichajeRequest;
 import com.salesianos.tracky.model.ENUM.TipoFichaje;
 import com.salesianos.tracky.model.Empleado;
+import com.salesianos.tracky.model.Fichaje;
 import com.salesianos.tracky.service.EmpleadoService;
 import com.salesianos.tracky.service.FichajeService;
 import lombok.RequiredArgsConstructor;
@@ -58,7 +60,7 @@ public class EmpleadoController {
     }
 
     @PostMapping ("tracker/{id}")
-    public ResponseEntity <Empleado> addTrackEmployer (
+    public ResponseEntity <Fichaje> addTrackEmployer (
             @RequestBody UpdateFichajeRequest fichajeDTO
             ) {
 

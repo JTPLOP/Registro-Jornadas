@@ -19,7 +19,7 @@ public class Fichaje {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private LocalDateTime fechaAccion = LocalDateTime.now();
+    private LocalDateTime fechaAccion;
 
     @Enumerated(EnumType.STRING)
     private TipoFichaje tipoFichaje;

@@ -1,6 +1,7 @@
 package com.salesianos.tracky.service;
 
 
+import com.salesianos.tracky.model.DTOs.fichaje.GetFichajeResponse;
 import com.salesianos.tracky.model.DTOs.fichaje.UpdateFichajeRequest;
 import com.salesianos.tracky.model.ENUM.TipoFichaje;
 import com.salesianos.tracky.model.Empleado;
@@ -19,16 +20,17 @@ public class FichajeService {
     private final FichajeRepository fichajeRepository;
     private final EmpleadoRepository empleadoRepository;
 
-    public Empleado addFichaje (UpdateFichajeRequest fichajeDTO) {
+    public Fichaje addFichaje (UpdateFichajeRequest fichajeDTO) {
 
         Empleado empleado = empleadoRepository.findById(fichajeDTO.idEmpleado())
                 .orElseThrow(() -> new RuntimeException());
 
         Fichaje fichaje = fichajeDTO.to();
 
-        empleado.getHistorialFichajes().add(fichaje);
+        fichaje.setEmpleado(empleado);
+        fichaje.setFechaAccion(LocalDateTime.now());
 
-        return empleadoRepository.save(empleado);
+        return fichajeRepository.save(fichaje);
 
     }
 

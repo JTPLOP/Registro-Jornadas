@@ -6,13 +6,13 @@ import com.salesianos.tracky.model.Fichaje;
 import java.time.LocalDateTime;
 
 public record UpdateFichajeRequest(
-        Enum<TipoFichaje> tipoFichaje,
+        TipoFichaje tipoFichaje,
         Long idEmpleado
 
 ) {
     public Fichaje to() {
         return Fichaje.builder()
-                .tipoFichaje((TipoFichaje) tipoFichaje)
+                .tipoFichaje(this.tipoFichaje)
                 .build();
     }
 
