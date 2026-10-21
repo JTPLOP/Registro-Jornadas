@@ -1,6 +1,9 @@
 package com.salesianos.tracky.service;
 
+import com.salesianos.tracky.model.DTOs.empleado.UpdateEmpleadoRequest;
+import com.salesianos.tracky.model.Departamento;
 import com.salesianos.tracky.model.Empleado;
+import com.salesianos.tracky.repository.DepartamentoRepository;
 import com.salesianos.tracky.repository.EmpleadoRepository;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +16,7 @@ import java.util.List;
 public class EmpleadoService {
 
     private final EmpleadoRepository empleadoRepository;
+    private final DepartamentoRepository departamentoRepository;
 
     public List<Empleado> findAllEmployers() {
 
@@ -25,7 +29,6 @@ public class EmpleadoService {
 
     }
 
-
     public Empleado findEmployerById (Long id) {
 
         return empleadoRepository.findById(id)
@@ -33,11 +36,15 @@ public class EmpleadoService {
 
     }
 
-    public Empleado addEmployer (Empleado empleado) {
+    public Empleado addEmployer (UpdateEmpleadoRequest empleadoDTO) {
 
-        empleadoRepository.save(empleado);
+        Empleado empleado = empleadoDTO.to();
 
-        return empleado;
+        Departamento departamento = departamentoRepository.findById(empleadoDTO.idDepartamento())
+                .orElse(null);
+        empleado.setDepartamento(departamento);
+
+        return empleadoRepository.save(empleado);
 
     }
 

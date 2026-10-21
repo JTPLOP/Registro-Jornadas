@@ -1,12 +1,13 @@
 package com.salesianos.tracky.service;
 
+import com.salesianos.tracky.model.DTOs.departamento.UpdateDepartamentoRequest;
+import com.salesianos.tracky.model.DTOs.empleado.UpdateEmpleadoRequest;
 import com.salesianos.tracky.model.Departamento;
 import com.salesianos.tracky.repository.DepartamentoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -36,11 +37,11 @@ public class DepartamentoService {
 
     }
 
-    public Departamento addDepartment (Departamento departamento) {
+    public Departamento addDepartment (UpdateDepartamentoRequest departamentoDTO) {
 
-        departamentoRepository.save(departamento);
+        Departamento departamento = departamentoDTO.to();
 
-        return departamento;
+        return departamentoRepository.save(departamento);
 
     }
 
@@ -52,11 +53,6 @@ public class DepartamentoService {
 
 
     }
-
-
-
-
-
 
 
 }
