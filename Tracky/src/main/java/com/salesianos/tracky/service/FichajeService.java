@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -20,19 +21,41 @@ public class FichajeService {
     private final FichajeRepository fichajeRepository;
     private final EmpleadoRepository empleadoRepository;
 
-    public GetFichajeResponse addFichaje (UpdateFichajeRequest fichajeDTO) {
+    public GetFichajeResponse addFichaje (Long id) {
 
-        Empleado empleado = empleadoRepository.findById(fichajeDTO.idEmpleado())
+        TipoFichaje tipoFichaje;
+
+        Empleado empleado = empleadoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException());
+
+
+        UpdateFichajeRequest fichajeDTO = new UpdateFichajeRequest(ultimoTipoFichaje(empleado), empleado);
 
         Fichaje fichaje = fichajeDTO.to();
 
         fichaje.setEmpleado(empleado);
         fichaje.setFechaAccion(LocalDateTime.now());
 
-        fichajeRepository.save(fichaje);
+        empleado.getHistorialFichajes().add(fichaje);
 
         return GetFichajeResponse.of(fichaje);
+
+    }
+
+    public TipoFichaje ultimoTipoFichaje (Empleado empleado) {
+
+        List<Fichaje> historial = empleado.getHistorialFichajes();
+
+        if (historial.isEmpty())
+            return TipoFichaje.ENTRADA;
+
+        Fichaje lastFichaje = historial.get(historial.size() - 1);
+
+        if (lastFichaje.getTipoFichaje().name().equalsIgnoreCase(TipoFichaje.ENTRADA.name()))
+            return TipoFichaje.ENTRADA;
+        else {
+            return TipoFichaje.SALIDA;
+        }
 
     }
 

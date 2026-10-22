@@ -61,11 +61,11 @@ public class EmpleadoController {
 
     @PostMapping ("tracker/{id}")
     public ResponseEntity <GetFichajeResponse> addTrackEmployer (
-            @RequestBody UpdateFichajeRequest fichajeDTO
+            @PathVariable Long id
             ) {
 
         return ResponseEntity.status(201)
-                .body(fichajeService.addFichaje(fichajeDTO));
+                .body(fichajeService.addFichaje(id));
 
     }
 
