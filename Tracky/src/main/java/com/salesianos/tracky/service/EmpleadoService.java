@@ -1,5 +1,6 @@
 package com.salesianos.tracky.service;
 
+import com.salesianos.tracky.model.DTOs.empleado.GetEmpleadoResponse;
 import com.salesianos.tracky.model.DTOs.empleado.UpdateEmpleadoRequest;
 import com.salesianos.tracky.model.Departamento;
 import com.salesianos.tracky.model.Empleado;
@@ -46,6 +47,20 @@ public class EmpleadoService {
 
         return empleadoRepository.save(empleado);
 
+    }
+
+    public GetEmpleadoResponse updateEmpleado (Long id, UpdateEmpleadoRequest empleadoDTO) {
+
+        return empleadoRepository.findById(id)
+                .map( x -> {
+                    x.setNombre(empleadoDTO.nombre());
+                    x.setCargo(empleadoDTO.cargo());
+                    x.setSalario(empleadoDTO.salario());
+                    x.getDepartamento().setId(empleadoDTO.idDepartamento());
+                    empleadoRepository.save(x);
+                    return GetEmpleadoResponse.of(x);
+
+                }).orElseThrow(() -> new RuntimeException());
     }
 
     public void deleteEmployer (Long id) {

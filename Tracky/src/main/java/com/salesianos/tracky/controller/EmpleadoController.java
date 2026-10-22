@@ -69,6 +69,17 @@ public class EmpleadoController {
 
     }
 
+    @PutMapping ("/{id}")
+    public ResponseEntity <GetEmpleadoResponse> updateEmpleado (
+            @PathVariable Long id,
+            @RequestBody UpdateEmpleadoRequest empleadoDTO
+    ) {
+
+        return ResponseEntity.status(200)
+                .body(empleadoService.updateEmpleado(id, empleadoDTO));
+
+    }
+
     @DeleteMapping ("{id}")
     public ResponseEntity<Void> deleteEmployer(
              @PathVariable Long id
