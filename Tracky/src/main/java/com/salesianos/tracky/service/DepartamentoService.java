@@ -1,5 +1,6 @@
 package com.salesianos.tracky.service;
 
+import com.salesianos.tracky.model.DTOs.departamento.GetDepartamentoResponse;
 import com.salesianos.tracky.model.DTOs.departamento.UpdateDepartamentoRequest;
 import com.salesianos.tracky.model.DTOs.empleado.UpdateEmpleadoRequest;
 import com.salesianos.tracky.model.Departamento;
@@ -43,6 +44,18 @@ public class DepartamentoService {
 
         return departamentoRepository.save(departamento);
 
+    }
+
+    public GetDepartamentoResponse updateDepartment ( UpdateDepartamentoRequest departamentoDTO, Long id ) {
+
+        return departamentoRepository.findById(id)
+                .map(x -> {
+                    x.setNombre(departamentoDTO.nombre());
+                    x.setPresupuesto(departamentoDTO.presupuesto());
+                    departamentoRepository.save(x);
+                    return GetDepartamentoResponse.of(x);
+                })
+                .orElseThrow(() -> new RuntimeException());
     }
 
     public void deleteDepartment (Long id) {

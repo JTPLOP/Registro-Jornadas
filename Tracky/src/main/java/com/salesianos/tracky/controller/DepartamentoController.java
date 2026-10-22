@@ -51,6 +51,17 @@ public class DepartamentoController {
                 .body(departamentoService.addDepartment(departamento));
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity <GetDepartamentoResponse> updateDepartment (
+            @PathVariable Long id,
+            @RequestBody UpdateDepartamentoRequest departmentDTO
+    ) {
+
+        return ResponseEntity.status(200)
+                .body(departamentoService.updateDepartment(departmentDTO, id));
+
+    }
+
     @DeleteMapping ("/{id}")
     public ResponseEntity<Void> deleteDepartment (
             @PathVariable Long id
