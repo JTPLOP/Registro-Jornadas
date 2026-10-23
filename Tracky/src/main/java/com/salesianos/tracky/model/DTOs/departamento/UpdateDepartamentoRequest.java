@@ -1,11 +1,14 @@
 package com.salesianos.tracky.model.DTOs.departamento;
 
 import com.salesianos.tracky.model.Departamento;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
 
 public record UpdateDepartamentoRequest(
 
-    String nombre,
-    double presupuesto
+
+    @NotEmpty(message = "Nombre vacio") String nombre,
+    @Min(value = 0, message = "Valor por encima 0") double presupuesto
 
 ) {
 

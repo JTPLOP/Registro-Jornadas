@@ -6,8 +6,10 @@ import com.salesianos.tracky.model.DTOs.departamento.UpdateDepartamentoRequest;
 import com.salesianos.tracky.model.DTOs.empleado.UpdateEmpleadoRequest;
 import com.salesianos.tracky.model.Departamento;
 import com.salesianos.tracky.service.DepartamentoService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,6 +17,7 @@ import java.util.List;
 @RestController
 @RequestMapping ("api/departamento")
 @RequiredArgsConstructor
+@Validated
 public class DepartamentoController {
 
     private final DepartamentoService departamentoService;
@@ -45,7 +48,7 @@ public class DepartamentoController {
 
     @PostMapping
     public ResponseEntity<Departamento> addDepartment(
-            @RequestBody UpdateDepartamentoRequest departamento) {
+            @Valid @RequestBody UpdateDepartamentoRequest departamento) {
 
         return ResponseEntity.status(201)
                 .body(departamentoService.addDepartment(departamento));
@@ -54,7 +57,7 @@ public class DepartamentoController {
     @PutMapping("/{id}")
     public ResponseEntity <GetDepartamentoResponse> updateDepartment (
             @PathVariable Long id,
-            @RequestBody UpdateDepartamentoRequest departmentDTO
+            @Valid @RequestBody UpdateDepartamentoRequest departmentDTO
     ) {
 
         return ResponseEntity.status(200)
