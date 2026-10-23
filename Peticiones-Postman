@@ -1,0 +1,377 @@
+{
+  "info": {
+    "_postman_id": "a24ff2f6-140b-4f32-9c6b-ad62307b8b0c",
+    "name": "Registro-Tracker",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "58520506",
+    "_collection_link": "https://go.postman.co/collection/58520506-a24ff2f6-140b-4f32-9c6b-ad62307b8b0c?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Departamentos",
+      "item": [
+        {
+          "name": "Add Department",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"nombre\": \"Desarrollo de Software\",\r\n  \"presupuesto\": 150000.50\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/departamento",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "departamento"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "List Department",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/departamento",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "departamento"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Department",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/departamento/4",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "departamento",
+                "4"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Add Department - Error",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"presupuesto\": \"no-es-un-numero\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/departamento",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "departamento"
+              ]
+            },
+            "description": "Petición incorrecta: falta el campo 'nombre' obligatorio y presupuesto tiene tipo string en vez de number"
+          },
+          "response": []
+        },
+        {
+          "name": "List Department - Error",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/departamentoss",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "departamentoss"
+              ]
+            },
+            "description": "Petición incorrecta: endpoint con typo, la ruta no existe"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Department - Error",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/departamento/9999",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "departamento",
+                "9999"
+              ]
+            },
+            "description": "Petición incorrecta: ID 9999 no existe en la base de datos"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Empleado",
+      "item": [
+        {
+          "name": "Crear Employers",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"nombre\": \"Ana García\",\r\n  \"cargo\": \"Desarrolladora Backend\",\r\n  \"salario\": 45000.00,\r\n  \"idDepartamento\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/empleado",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "empleado"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Recibir Lista",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/empleado",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "empleado"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Borrar Empleado",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/empleado/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "empleado",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Fichar Empleado",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/empleado/1/fichar",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "empleado",
+                "1",
+                "fichar"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Crear Employers - Error",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"nombre\": \"\", \"cargo\": 12345, \"idDepartamento\": 9999}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/empleado",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "empleado"
+              ]
+            },
+            "description": "Petición incorrecta: nombre vacío, cargo con tipo number en vez de string, idDepartamento 9999 no existe"
+          },
+          "response": []
+        },
+        {
+          "name": "Fichar Empleado - Error",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/empleado/9999/fichar",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "empleado",
+                "9999",
+                "fichar"
+              ]
+            },
+            "description": "Petición incorrecta: el empleado con ID 9999 no existe"
+          },
+          "response": []
+        },
+        {
+          "name": "Borrar Empleado - Error",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/empleado/9999",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "empleado",
+                "9999"
+              ]
+            },
+            "description": "Petición incorrecta: el empleado con ID 9999 no existe"
+          },
+          "response": []
+        },
+        {
+          "name": "Recibir Lista - Error",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/empleadoss",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "empleadoss"
+              ]
+            },
+            "description": "Petición incorrecta: endpoint con typo, la ruta no existe"
+          },
+          "response": []
+        },
+        {
+          "name": "Todos los fichajes Empleado",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"nombre\": \"\", \"cargo\": 12345, \"idDepartamento\": 9999}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/empleado/1/fichajes",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "empleado",
+                "1",
+                "fichajes"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8000/api"
+    }
+  ]
+}
