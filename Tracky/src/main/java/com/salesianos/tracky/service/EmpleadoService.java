@@ -77,7 +77,7 @@ public class EmpleadoService {
     public void deleteEmployer (Long id) {
 
         if (!empleadoRepository.existsById(id))
-            throw new EmpleadoNotFoundException();
+            throw new EmpleadoNotFoundException(id);
 
         empleadoRepository.deleteById(id);
 

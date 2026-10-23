@@ -2,6 +2,7 @@ package com.salesianos.tracky.validation;
 
 
 import com.salesianos.tracky.model.DTOs.departamento.UpdateDepartamentoRequest;
+import com.salesianos.tracky.model.DTOs.empleado.UpdateEmpleadoRequest;
 import com.salesianos.tracky.model.Departamento;
 import com.salesianos.tracky.model.Empleado;
 import com.salesianos.tracky.repository.DepartamentoRepository;
@@ -14,36 +15,27 @@ import java.util.List;
 import java.util.Optional;
 
 public class PresupuestoSuficienteValidator
-        implements ConstraintValidator<PresupuestoSuficiente, UpdateDepartamentoRequest> {
+        implements ConstraintValidator<PresupuestoSuficiente, UpdateEmpleadoRequest> {
 
     @Autowired
     private DepartamentoRepository departamentoRepository;
 
     @Override
-    public boolean isValid(UpdateDepartamentoRequest departamentoDTO, ConstraintValidatorContext context) {
-        double totalSalario = 0;
-
-        Optional<Departamento> departamento = departamentoRepository.findByNombre(departamentoDTO.nombre());
-
-        if (departamento.isEmpty())
-            return false;
-
-        else {
-            List<Empleado> listEmpleado = departamento.get().getListaEmpleados();
-
-            if (listEmpleado.isEmpty())
-                return true;
-
-            for (Empleado empleado : listEmpleado) {
-
-                totalSalario += empleado.getSalario();
-            }
-
-            if (totalSalario > departamento.get().getPresupuesto())
-                return false;
-
-            return true;
-
+    public boolean isValid(UpdateEmpleadoRequest empleadoDTO, ConstraintValidatorContext context) {
+        if (empleadoDTO == null || empleadoDTO.idDepartamento() == null) {
+            return true; // @NotNull se encarga de esto
         }
+
+        Optional<Departamento> departamento = departamentoRepository.findById(empleadoDTO.idDepartamento());
+        if (departamento.isEmpty()) {
+            return true; // El servicio lanzará DepartamentoNotFoundException (404)
+        }
+
+        double totalSalario = empleadoDTO.salario();
+        for (Empleado empleado : departamento.get().getListaEmpleados()) {
+            totalSalario += empleado.getSalario();
+        }
+
+        return totalSalario <= departamento.get().getPresupuesto();
     }
 }

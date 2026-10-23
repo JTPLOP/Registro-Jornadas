@@ -8,7 +8,7 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 
-
+@PresupuestoSuficiente(message = "{empleado.idDepartamento.presupuesto}")
 public record UpdateEmpleadoRequest(
         @NotBlank(message = "{empleado.nombre.notblank}")
         String nombre,
@@ -21,7 +21,6 @@ public record UpdateEmpleadoRequest(
         @Min(value = 0, message = "{empleado.salario.min}")
         double salario,
 
-        @PresupuestoSuficiente(message = "{empleado.idDepartamento.presupuesto}")
         @NotNull(message = "{empleado.idDepartamento.notnull}")
         Long idDepartamento
 ) {

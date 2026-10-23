@@ -1,6 +1,7 @@
 package com.salesianos.tracky.service;
 
 
+import com.salesianos.tracky.error.FichajeDuplicadoException;
 import com.salesianos.tracky.model.DTOs.fichaje.GetFichajeResponse;
 import com.salesianos.tracky.model.DTOs.fichaje.UpdateFichajeRequest;
 import com.salesianos.tracky.model.ENUM.TipoFichaje;
@@ -23,14 +24,23 @@ public class FichajeService {
 
     public GetFichajeResponse addFichaje (Empleado empleado) {
 
-        UpdateFichajeRequest fichajeDTO = new UpdateFichajeRequest(ultimoTipoFichaje(empleado), empleado.getId());
+        TipoFichaje siguienteTipo = ultimoTipoFichaje(empleado);
 
-        Fichaje fichaje = fichajeDTO.to();
+        List<Fichaje> historial = empleado.getHistorialFichajes();
+        if (!historial.isEmpty()) {
+            TipoFichaje ultimo = historial.get(historial.size() - 1).getTipoFichaje();
+            if (ultimo == siguienteTipo) {
+                throw new FichajeDuplicadoException(empleado.getId(), siguienteTipo.name());
+            }
+        }
 
-        fichaje.setEmpleado(empleado);
-        fichaje.setFechaAccion(LocalDateTime.now());
+        Fichaje fichaje = Fichaje.builder()
+                .tipoFichaje(siguienteTipo)
+                .fechaAccion(LocalDateTime.now())
+                .build();
 
-        empleado.getHistorialFichajes().add(fichaje);
+        fichaje.addToEmployer(empleado);
+        fichajeRepository.save(fichaje);
 
         return GetFichajeResponse.of(fichaje);
 
@@ -53,10 +63,10 @@ public class FichajeService {
 
         Fichaje lastFichaje = historial.get(historial.size() - 1);
 
-        if (lastFichaje.getTipoFichaje().name().equalsIgnoreCase(TipoFichaje.ENTRADA.name()))
-            return TipoFichaje.ENTRADA;
-        else {
+        if (lastFichaje.getTipoFichaje() == TipoFichaje.ENTRADA)
             return TipoFichaje.SALIDA;
+        else {
+            return TipoFichaje.ENTRADA;
         }
 
     }
