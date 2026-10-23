@@ -9,8 +9,10 @@ import com.salesianos.tracky.model.Empleado;
 import com.salesianos.tracky.service.DepartamentoService;
 import com.salesianos.tracky.service.EmpleadoService;
 import com.salesianos.tracky.service.FichajeService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,6 +20,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/empleado")
 @RequiredArgsConstructor
+@Validated
 public class EmpleadoController {
 
     private final EmpleadoService empleadoService;
@@ -62,7 +65,7 @@ public class EmpleadoController {
 
     @PostMapping
     public ResponseEntity<Empleado> addEmployer (
-            @RequestBody UpdateEmpleadoRequest empleado
+           @Valid @RequestBody UpdateEmpleadoRequest empleado
     ) {
 
         return ResponseEntity.status(201)
@@ -72,7 +75,7 @@ public class EmpleadoController {
 
     @PostMapping ("tracker/{id}")
     public ResponseEntity <GetFichajeResponse> addTrackEmployer (
-            @RequestBody UpdateFichajeRequest fichajeDTO
+            @Valid @RequestBody UpdateFichajeRequest fichajeDTO
             ) {
 
         return ResponseEntity.status(201)
@@ -83,7 +86,7 @@ public class EmpleadoController {
     @PutMapping ("/{id}")
     public ResponseEntity <GetEmpleadoResponse> updateEmpleado (
             @PathVariable Long id,
-            @RequestBody UpdateEmpleadoRequest empleadoDTO
+            @Valid @RequestBody UpdateEmpleadoRequest empleadoDTO
     ) {
 
         return ResponseEntity.status(200)
