@@ -8,6 +8,7 @@ import com.salesianos.tracky.model.DTOs.fichaje.UpdateFichajeRequest;
 import com.salesianos.tracky.model.ENUM.TipoFichaje;
 import com.salesianos.tracky.model.Empleado;
 import com.salesianos.tracky.model.Fichaje;
+import com.salesianos.tracky.service.DepartamentoService;
 import com.salesianos.tracky.service.EmpleadoService;
 import com.salesianos.tracky.service.FichajeService;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,7 @@ public class EmpleadoController {
 
     private final EmpleadoService empleadoService;
     private final FichajeService fichajeService;
+    private final DepartamentoService departamentoService;
 
     @GetMapping
     public ResponseEntity<List<GetEmpleadoResponse>> getAllEmployers () {
@@ -79,6 +81,18 @@ public class EmpleadoController {
                 .body(empleadoService.updateEmpleado(id, empleadoDTO));
 
     }
+
+    @PutMapping ("/{idEmple}/departamento/{/idDepart}")
+    public ResponseEntity <GetEmpleadoResponse> updateEmpleadoDepart (
+            @PathVariable Long idEmple,
+            @PathVariable Long idDepart
+    ) {
+
+        return ResponseEntity.status(200)
+                .body(empleadoService.updateDepartEmpleado(empleadoService.findEmployerById(idEmple),
+                        departamentoService.findById(idDepart)));
+    }
+
 
     @DeleteMapping ("{id}")
     public ResponseEntity<Void> deleteEmployer(

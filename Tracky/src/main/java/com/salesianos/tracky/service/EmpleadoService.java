@@ -63,6 +63,15 @@ public class EmpleadoService {
                 }).orElseThrow(() -> new RuntimeException());
     }
 
+    public GetEmpleadoResponse updateDepartEmpleado (Empleado empleado, Departamento departamento) {
+
+        empleado.setDepartamento(departamento);
+        empleadoRepository.save(empleado);
+
+        return GetEmpleadoResponse.of(empleado);
+
+    }
+
     public void deleteEmployer (Long id) {
 
         if (!empleadoRepository.existsById(id))
