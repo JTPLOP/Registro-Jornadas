@@ -12,13 +12,4 @@ import java.util.Optional;
 @Repository
 public interface FichajeRepository extends JpaRepository <Fichaje, Long> {
 
-    @Query(value = """
-        SELECT e.TipoFichaje
-        FROM Fichaje e
-        where id=?
-        ORDER BY e.fechaAccion DESC
-        LIMIT 1
-        """, nativeQuery = true)
-    Optional<TipoFichaje> encontrarUltimoFichaje(Long id);
-
 }

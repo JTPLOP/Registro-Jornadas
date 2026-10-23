@@ -18,7 +18,7 @@ public record GetEmpleadoResponse(
                 empleado.getNombre(),
                 empleado.getCargo(),
                 empleado.getSalario(),
-                empleado.getDepartamento().getNombre(),
+                empleado.getDepartamento().getNombre() != null ? empleado.getDepartamento().getNombre() : "Sin departamento",
                 empleado.getHistorialFichajes()
         );
     }
