@@ -5,14 +5,11 @@ import com.salesianos.tracky.model.DTOs.empleado.GetEmpleadoResponse;
 import com.salesianos.tracky.model.DTOs.empleado.UpdateEmpleadoRequest;
 import com.salesianos.tracky.model.DTOs.fichaje.GetFichajeResponse;
 import com.salesianos.tracky.model.DTOs.fichaje.UpdateFichajeRequest;
-import com.salesianos.tracky.model.ENUM.TipoFichaje;
 import com.salesianos.tracky.model.Empleado;
-import com.salesianos.tracky.model.Fichaje;
 import com.salesianos.tracky.service.DepartamentoService;
 import com.salesianos.tracky.service.EmpleadoService;
 import com.salesianos.tracky.service.FichajeService;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,9 +41,21 @@ public class EmpleadoController {
             @PathVariable Long id
     ) {
 
-        Empleado resultBusqueda = empleadoService.findEmployerById(id);
+        return ResponseEntity.ok(GetEmpleadoResponse.of(empleadoService.findEmployerById(id)));
 
-        return ResponseEntity.ok(GetEmpleadoResponse.of(resultBusqueda));
+    }
+
+    @GetMapping ("/{id}/fichajes")
+    public ResponseEntity<List<GetFichajeResponse>> getAllFichajesEmpleado (
+            @PathVariable Long id
+    ) {
+
+        return ResponseEntity.ok(fichajeService.getAllFichajesEmpleado(
+                empleadoService.findEmployerById(id)
+        )
+                .stream()
+                .map(GetFichajeResponse::of)
+                .toList());
 
     }
 
@@ -92,6 +101,7 @@ public class EmpleadoController {
                 .body(empleadoService.updateDepartEmpleado(empleadoService.findEmployerById(idEmple),
                         departamentoService.findById(idDepart)));
     }
+
 
 
     @DeleteMapping ("{id}")
