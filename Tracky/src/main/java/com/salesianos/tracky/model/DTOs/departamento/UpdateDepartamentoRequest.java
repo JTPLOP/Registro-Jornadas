@@ -7,7 +7,7 @@ import jakarta.validation.constraints.NotEmpty;
 public record UpdateDepartamentoRequest(
 
 
-    @NotEmpty(message = "Nombre vacio") String nombre,
+    @NotEmpty(message = "{departamentoDto.nombre.notempty}") String nombre,
     @Min(value = 0, message = "Valor por encima 0") double presupuesto
 
 ) {
