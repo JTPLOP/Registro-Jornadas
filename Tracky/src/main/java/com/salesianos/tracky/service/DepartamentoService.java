@@ -1,5 +1,6 @@
 package com.salesianos.tracky.service;
 
+import com.salesianos.tracky.error.notfound.DepartamentoNotFoundException;
 import com.salesianos.tracky.model.DTOs.departamento.GetDepartamentoResponse;
 import com.salesianos.tracky.model.DTOs.departamento.UpdateDepartamentoRequest;
 import com.salesianos.tracky.model.DTOs.empleado.UpdateEmpleadoRequest;
@@ -24,7 +25,7 @@ public class DepartamentoService {
         List<Departamento> resulBusqueda = departamentoRepository.findAll();
 
         if (resulBusqueda.isEmpty())
-            throw new RuntimeException();
+            throw new DepartamentoNotFoundException();
 
         return resulBusqueda;
 
@@ -34,7 +35,7 @@ public class DepartamentoService {
     public Departamento findById(Long id) {
 
         return departamentoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException());
+                .orElseThrow(() -> new DepartamentoNotFoundException(id));
 
     }
 
@@ -55,12 +56,12 @@ public class DepartamentoService {
                     departamentoRepository.save(x);
                     return GetDepartamentoResponse.of(x);
                 })
-                .orElseThrow(() -> new RuntimeException());
+                .orElseThrow(() -> new DepartamentoNotFoundException(id));
     }
 
     public void deleteDepartment (Long id) {
         if (!departamentoRepository.existsById(id))
-            throw new RuntimeException();
+            throw new DepartamentoNotFoundException();
 
         departamentoRepository.deleteById(id);
 

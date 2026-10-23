@@ -1,5 +1,7 @@
 package com.salesianos.tracky.service;
 
+import com.salesianos.tracky.error.invalid.InvalidEmpleadoException;
+import com.salesianos.tracky.error.notfound.EmpleadoNotFoundException;
 import com.salesianos.tracky.model.DTOs.empleado.GetEmpleadoResponse;
 import com.salesianos.tracky.model.DTOs.empleado.UpdateEmpleadoRequest;
 import com.salesianos.tracky.model.Departamento;
@@ -24,7 +26,7 @@ public class EmpleadoService {
         List<Empleado> resultBusqueda = empleadoRepository.findAll();
 
         if (resultBusqueda.isEmpty())
-            throw new RuntimeException();
+            throw new EmpleadoNotFoundException();
 
         return resultBusqueda;
 
@@ -33,7 +35,7 @@ public class EmpleadoService {
     public Empleado findEmployerById (Long id) {
 
         return empleadoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException());
+                .orElseThrow(() -> new EmpleadoNotFoundException(id));
 
     }
 
@@ -60,13 +62,22 @@ public class EmpleadoService {
                     empleadoRepository.save(x);
                     return GetEmpleadoResponse.of(x);
 
-                }).orElseThrow(() -> new RuntimeException());
+                }).orElseThrow(() -> new EmpleadoNotFoundException());
+    }
+
+    public GetEmpleadoResponse updateDepartEmpleado (Empleado empleado, Departamento departamento) {
+
+        empleado.setDepartamento(departamento);
+        empleadoRepository.save(empleado);
+
+        return GetEmpleadoResponse.of(empleado);
+
     }
 
     public void deleteEmployer (Long id) {
 
         if (!empleadoRepository.existsById(id))
-            throw new RuntimeException();
+            throw new EmpleadoNotFoundException();
 
         empleadoRepository.deleteById(id);
 
