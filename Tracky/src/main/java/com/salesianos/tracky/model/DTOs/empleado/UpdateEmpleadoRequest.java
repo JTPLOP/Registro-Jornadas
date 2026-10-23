@@ -2,13 +2,23 @@ package com.salesianos.tracky.model.DTOs.empleado;
 
 import com.salesianos.tracky.model.Empleado;
 import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 public record UpdateEmpleadoRequest(
-        @NotEmpty(message = "Debe haber nombre") String nombre,
-        @NotEmpty(message = "Debe haber cargo") String cargo,
-        @Min(value = 0, message = "Min 0") double salario,
+        @NotBlank(message = "{empleado.nombre.notblank}")
+        String nombre,
 
+
+        @NotBlank(message = "{empleado.cargo.notblank}")
+        String cargo,
+
+
+        @Min(value = 0, message = "{empleado.salario.min}")
+        double salario,
+
+        @NotNull(message = "{empleado.idDepartamento.notnull}")
         Long idDepartamento
 ) {
 

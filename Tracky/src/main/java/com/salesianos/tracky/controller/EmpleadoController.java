@@ -75,7 +75,7 @@ public class EmpleadoController {
     @PutMapping ("/{id}")
     public ResponseEntity <GetEmpleadoResponse> updateEmpleado (
             @PathVariable Long id,
-            @RequestBody UpdateEmpleadoRequest empleadoDTO
+            @Valid @RequestBody UpdateEmpleadoRequest empleadoDTO
     ) {
 
         return ResponseEntity.status(200)
