@@ -184,7 +184,7 @@ public class EmpleadoController {
             )
     )
     @PostMapping
-    public ResponseEntity<Empleado> addEmployer(
+    public ResponseEntity<GetEmpleadoResponse> addEmployer(
             @io.swagger.v3.oas.annotations.parameters.RequestBody(
                     description = "Empleado a crear", required = true,
                     content = @Content(mediaType = "application/json",
@@ -227,7 +227,7 @@ public class EmpleadoController {
                     }
             )
     )
-    @PostMapping("/tracker/{id}")
+    @PostMapping("/{id}/fichar")
     public ResponseEntity<GetFichajeResponse> addTrackEmployer(
             @Parameter(description = "Identificador del empleado a fichar") @PathVariable Long id
     ) {

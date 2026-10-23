@@ -1,6 +1,7 @@
 package com.salesianos.tracky.service;
 
 import com.salesianos.tracky.error.invalid.InvalidEmpleadoException;
+import com.salesianos.tracky.error.notfound.DepartamentoNotFoundException;
 import com.salesianos.tracky.error.notfound.EmpleadoNotFoundException;
 import com.salesianos.tracky.model.DTOs.empleado.GetEmpleadoResponse;
 import com.salesianos.tracky.model.DTOs.empleado.UpdateEmpleadoRequest;
@@ -39,15 +40,17 @@ public class EmpleadoService {
 
     }
 
-    public Empleado addEmployer (UpdateEmpleadoRequest empleadoDTO) {
+    public GetEmpleadoResponse addEmployer (UpdateEmpleadoRequest empleadoDTO) {
 
         Empleado empleado = empleadoDTO.to();
 
         Departamento departamento = departamentoRepository.findById(empleadoDTO.idDepartamento())
-                .orElse(null);
+                .orElseThrow(() -> new DepartamentoNotFoundException());
         empleado.setDepartamento(departamento);
 
-        return empleadoRepository.save(empleado);
+        empleadoRepository.save(empleado);
+
+        return GetEmpleadoResponse.of(empleado);
 
     }
 

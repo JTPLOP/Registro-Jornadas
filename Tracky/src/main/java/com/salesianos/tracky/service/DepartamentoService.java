@@ -39,11 +39,13 @@ public class DepartamentoService {
 
     }
 
-    public Departamento addDepartment (UpdateDepartamentoRequest departamentoDTO) {
+    public GetDepartamentoResponse addDepartment (UpdateDepartamentoRequest departamentoDTO) {
 
         Departamento departamento = departamentoDTO.to();
 
-        return departamentoRepository.save(departamento);
+        departamentoRepository.save(departamento);
+
+        return GetDepartamentoResponse.of(departamento);
 
     }
 

@@ -9,8 +9,7 @@ public record GetEmpleadoResponse(
         String nombre,
         String cargo,
         double salario,
-        String nombreDepartamento,
-        List <Fichaje> listFichaje
+        String nombreDepartamento
 ) {
 
     public static GetEmpleadoResponse of(Empleado empleado) {
@@ -18,8 +17,7 @@ public record GetEmpleadoResponse(
                 empleado.getNombre(),
                 empleado.getCargo(),
                 empleado.getSalario(),
-                empleado.getDepartamento().getNombre() != null ? empleado.getDepartamento().getNombre() : "Sin departamento",
-                empleado.getHistorialFichajes()
+                empleado.getDepartamento().getNombre() != null ? empleado.getDepartamento().getNombre() : "Sin departamento"
         );
     }
 }

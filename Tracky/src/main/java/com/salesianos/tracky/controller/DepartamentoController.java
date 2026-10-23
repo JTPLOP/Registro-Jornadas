@@ -118,7 +118,7 @@ public class DepartamentoController {
             )
     )
     @PostMapping
-    public ResponseEntity<Departamento> addDepartment(
+    public ResponseEntity<GetDepartamentoResponse> addDepartment(
             @io.swagger.v3.oas.annotations.parameters.RequestBody(
                     description = "Departamento a crear", required = true,
                     content = @Content(mediaType = "application/json",
