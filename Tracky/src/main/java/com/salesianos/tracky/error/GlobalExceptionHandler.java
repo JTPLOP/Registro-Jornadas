@@ -1,6 +1,7 @@
 package com.salesianos.tracky.error;
 
 
+import com.salesianos.tracky.error.notfound.DepartamentoNotFoundException;
 import com.salesianos.tracky.error.notfound.EmpleadoNotFoundException;
 import com.salesianos.tracky.error.notfound.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -25,7 +26,17 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return problem;
     }
 
-    
+
+    @ExceptionHandler(DepartamentoNotFoundException.class)
+    public ProblemDetail handleDepartamentoNotFound(EntityNotFoundException ex) {
+
+        ProblemDetail problem = ProblemDetail.forStatus(HttpStatus.NOT_FOUND);
+        problem.setTitle("Departento no encontrado");
+        problem.setDetail(ex.getMessage());
+        problem.setType(URI.create("https://example.com/errors/not-found"));
+
+        return problem;
+    }
 
 
 
